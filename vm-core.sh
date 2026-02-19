@@ -1,5 +1,17 @@
-#!/bin/bash
-set -euo pipefail
+#!/usr/bin/env bash
+
+VM_DIR="$HOME/.dhwaj-vm"
+mkdir -p "$VM_DIR"
+
+declare -A OS_OPTIONS
+
+OS_OPTIONS["Ubuntu 22.04"]="ubuntu|jammy|https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img|ubuntu-vm|ubuntu|ubuntu"
+
+OS_OPTIONS["Ubuntu 20.04"]="ubuntu|focal|https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img|ubuntu-vm|ubuntu|ubuntu"
+
+OS_OPTIONS["Debian 12"]="debian|bookworm|https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-amd64.qcow2|debian-vm|debian|debian"
+
+OS_OPTIONS["Jupyter Lab VM"]="jupyter|jammy|https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img|jupyter-vm|jupyter|jupyter"
 
 # =============================
 # Enhanced Multi-VM Manager
@@ -875,5 +887,6 @@ declare -A OS_OPTIONS=(
 # Start automatically
 check_dependencies
 main_menu
+
 
 
