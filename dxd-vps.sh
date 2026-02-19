@@ -1,58 +1,25 @@
 #!/bin/bash
 set -euo pipefail
 
-# === Full VM Manager Script ===
-#!/bin/bash
-set -euo pipefail
-
 # =============================
 # Enhanced Multi-VM Manager
 # =============================
 
-# Colors & Icons
-RESET='\033[0m'
-BLACK='\033[0;30m'  RED='\033[0;31m'    GREEN='\033[0;32m'
-YELLOW='\033[0;33m' BLUE='\033[0;34m'   PURPLE='\033[0;35m'
-CYAN='\033[0;36m'   WHITE='\033[0;37m'
-
-B_BLACK='\033[1;30m' B_RED='\033[1;31m'   B_GREEN='\033[1;32m'
-B_YELLOW='\033[1;33m' B_BLUE='\033[1;34m'  B_PURPLE='\033[1;35m'
-B_CYAN='\033[1;36m'  B_WHITE='\033[1;37m'
-
-# Backgrounds
-BG_BLACK='\033[40m'  BG_RED='\033[41m'    BG_GREEN='\033[42m'
-BG_YELLOW='\033[43m' BG_BLUE='\033[44m'   BG_PURPLE='\033[45m'
-BG_CYAN='\033[46m'   BG_WHITE='\033[47m'
-
-ICON_VM="💾"
-ICON_ROCKET="🚀"
-ICON_BOX="📦"
-ICON_GEAR="⚙️"
-ICON_CHECK="✅"
-ICON_ERROR="❌"
-ICON_WARN="⚠️"
-ICON_INFO="ℹ️"
-ICON_TELE="📡"
-ICON_RDP="🖥️"
-
-
 # Function to display header
 display_header() {
     clear
-    echo -e "${B_CYAN}"
     cat << "EOF"
-    
  ██████╗░██╗░░██╗██╗░░░░░░░██╗░█████╗░░░░░██╗
  ██╔══██╗██║░░██║██║░░██╗░░██║██╔══██╗░░░░██║
  ██║░░██║███████║╚██╗████╗██╔╝███████║░░░░██║
  ██║░░██║██╔══██║░████╔═████║░██╔══██║██╗░██║
  ██████╔╝██║░░██║░╚██╔╝░╚██╔╝░██║░░██║╚█████╔╝
  ╚═════╝░╚═╝░░╚═╝░░╚═╝░░░╚═╝░░╚═╝░░╚═╝░╚════╝░
+
+                 ⚡ DHWAJ VM MANAGER ⚡
+           High-Performance Multi-VM Controller
+════════════════════════════════════════════════════════
 EOF
-    echo -e "${RESET}"
-    echo -e "${B_YELLOW}             >>>  Ultimate VM Manager Tool  <<<   ${RESET}"
-    echo -e "${B_BLUE}             ---------------------------------------------   ${RESET}"
-    echo -e "                 ${B_PURPLE}Original VM Manager Script By DhwaJXD${RESET}"
     echo
 }
 
@@ -62,11 +29,11 @@ print_status() {
     local message=$2
     
     case $type in
-        "INFO") echo -e "\033[1;34m[ℹ️ INFO]\033[0m  $message" ;;
-        "WARN") echo -e "\033[1;33m[⚠️ WARN]\033[0m  $message" ;;
-        "ERROR") echo -e "\033[1;31m[❌ ERROR]\033[0m $message" ;;
-        "SUCCESS") echo -e "\033[1;32m[✅ OK]\033[0m    $message" ;;
-        "INPUT") echo -e "\033[1;36m[👉 INPUT]\033[0m $message" ;;
+        "INFO") echo -e "\033[1;34m[INFO]\033[0m $message" ;;
+        "WARN") echo -e "\033[1;33m[WARN]\033[0m $message" ;;
+        "ERROR") echo -e "\033[1;31m[ERROR]\033[0m $message" ;;
+        "SUCCESS") echo -e "\033[1;32m[SUCCESS]\033[0m $message" ;;
+        "INPUT") echo -e "\033[1;36m[INPUT]\033[0m $message" ;;
         *) echo "[$type] $message" ;;
     esac
 }
@@ -424,7 +391,7 @@ start_vm() {
 
         # Add GUI or console mode
         if [[ "$GUI_MODE" == true ]]; then
-            qemu_cmd+=(-vga virtio -display gtk,gl=off)
+            qemu_cmd+=(-vga virtio -display gtk,gl=on)
         else
             qemu_cmd+=(-nographic -serial mon:stdio)
         fi
@@ -780,19 +747,18 @@ main_menu() {
             echo
         fi
         
-        echo -e " ${B_WHITE}${BG_BLUE} MAIN MENU ${RESET}"
-        echo
-        echo -e " ${B_CYAN}1${RESET} ${ICON_VM}  ${B_GREEN}Create a new VM${RESET}"
+        echo "Main Menu:"
+        echo "  1) Create a new VM"
         if [ $vm_count -gt 0 ]; then
-            echo -e " ${B_CYAN}2${RESET} ${ICON_ROCKET}  ${B_GREEN}Start a VM${RESET}"
-            echo -e " ${B_CYAN}3${RESET} ${ICON_WARN}  ${B_YELLOW}Stop a VM${RESET}"
-            echo -e " ${B_CYAN}4${RESET} ${ICON_INFO}  ${B_BLUE}Show VM info${RESET}"
-            echo -e " ${B_CYAN}5${RESET} ${ICON_GEAR}  ${B_PURPLE}Edit VM configuration${RESET}"
-            echo -e " ${B_CYAN}6${RESET} ${ICON_ERROR}  ${B_RED}Delete a VM${RESET}"
-            echo -e " ${B_CYAN}7${RESET} ${ICON_BOX}  ${B_CYAN}Resize VM disk${RESET}"
-            echo -e " ${B_CYAN}8${RESET} ${ICON_TELE}  ${B_WHITE}Show VM performance${RESET}"
+            echo "  2) Start a VM"
+            echo "  3) Stop a VM"
+            echo "  4) Show VM info"
+            echo "  5) Edit VM configuration"
+            echo "  6) Delete a VM"
+            echo "  7) Resize VM disk"
+            echo "  8) Show VM performance"
         fi
-        echo -e " ${B_RED}0${RESET} ${ICON_ERROR}  ${B_RED}Exit${RESET}"
+        echo "  0) Exit"
         echo
         
         read -p "$(print_status "INPUT" "Enter your choice: ")" choice
